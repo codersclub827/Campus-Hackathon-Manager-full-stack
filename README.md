@@ -10,7 +10,7 @@ npm run dev
 ```
 
 Frontend: `http://localhost:5173`  
-Backend: `http://localhost:5000`
+Backend: `https://campus-hackathon-manager-full-stack-3.onrender.com`
 
 ## Environment
 

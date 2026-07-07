@@ -1,12 +1,14 @@
 import mongoose from "mongoose";
-import { env } from "./env.js";
 
-export async function connectDatabase() {
-  if (!env.mongoUri) {
-    console.info("MongoDB URI not set. API is running with route-level validation and in-memory responses.");
-    return;
+const connectDatabase = async () => {
+  const mongoURI = process.env.MONGO_URI;
+
+  if (!mongoURI) {
+    throw new Error("MONGO_URI is missing in Render Environment Variables");
   }
 
-  await mongoose.connect(env.mongoUri);
-  console.info("MongoDB connected");
-}
+  await mongoose.connect(mongoURI);
+  console.log("MongoDB Connected Successfully");
+};
+
+export default connectDatabase;

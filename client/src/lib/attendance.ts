@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { toast } from "sonner";
-import { apiFetch, getToken } from "./auth";
+import { apiFetch, apiUrl, getToken } from "./auth";
 import { getSocket } from "./live";
 
 export type AttendanceRole = "Student" | "Mentor" | "Judge" | "Admin";
@@ -272,7 +272,7 @@ export function useQRAttendance() {
       downloadBlob(new Blob([csv], { type: "text/csv" }), "attendance.csv");
       return;
     }
-    const response = await fetch("/api/attendance/export.csv", { headers: { Authorization: `Bearer ${getToken()}` } });
+    const response = await fetch(apiUrl("/api/attendance/export.csv"), { headers: { Authorization: `Bearer ${getToken()}` } });
     downloadBlob(await response.blob(), "attendance.csv");
   };
 

@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { io, type Socket } from "socket.io-client";
-import { getToken } from "./auth";
+import { API_BASE_URL, getToken } from "./auth";
 
 type Activity = {
   id: string;
@@ -40,7 +40,7 @@ let sharedSocket: Socket | null = null;
 
 export function getSocket() {
   if (!sharedSocket) {
-    sharedSocket = io("/", {
+    sharedSocket = io(API_BASE_URL, {
       path: "/socket.io",
       transports: ["websocket", "polling"],
       auth: { token: getToken() },

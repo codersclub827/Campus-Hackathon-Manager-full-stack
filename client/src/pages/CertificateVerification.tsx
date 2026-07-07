@@ -5,6 +5,7 @@ import { Link, useParams } from "react-router-dom";
 import { Card } from "../components/ui/card";
 import { Skeleton } from "../components/ui/skeleton";
 import type { CertificateItem } from "../lib/certificates";
+import { apiUrl } from "../lib/auth";
 
 export function CertificateVerificationPage() {
   const { certificateId } = useParams();
@@ -13,7 +14,7 @@ export function CertificateVerificationPage() {
   const [error, setError] = useState("");
 
   useEffect(() => {
-    fetch(`/api/certificates/verify/${certificateId}`)
+    fetch(apiUrl(`/api/certificates/verify/${certificateId}`))
       .then(async (response) => {
         const data = await response.json();
         if (!response.ok) throw new Error(data.message ?? "Certificate not found");

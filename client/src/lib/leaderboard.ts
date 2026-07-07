@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { apiFetch, getToken } from "./auth";
+import { apiFetch, apiUrl, getToken } from "./auth";
 import { getSocket } from "./live";
 
 export type RubricScores = {
@@ -242,7 +242,7 @@ export function useLiveLeaderboard() {
       downloadBlob(new Blob([csv], { type: "text/csv" }), "leaderboard-results.csv");
       return;
     }
-    const response = await fetch("/api/leaderboard/export.csv", { headers: { Authorization: `Bearer ${getToken()}` } });
+    const response = await fetch(apiUrl("/api/leaderboard/export.csv"), { headers: { Authorization: `Bearer ${getToken()}` } });
     downloadBlob(await response.blob(), "leaderboard-results.csv");
   };
 

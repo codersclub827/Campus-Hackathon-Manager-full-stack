@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { apiFetch, getToken } from "./auth";
+import { apiFetch, apiUrl, getToken } from "./auth";
 import { getSocket } from "./live";
 
 export type CertificateCategory = "Winner" | "Runner-up" | "Participant" | "Mentor" | "Judge" | "Organizer";
@@ -232,7 +232,7 @@ export function useCertificates() {
       downloadBlob(new Blob([`Certificate ${certificate.certificateId} for ${certificate.recipientName}`], { type: "application/pdf" }), `${certificate.certificateId}.pdf`);
       return;
     }
-    const response = await fetch(`/api/certificates/${certificate.id}/pdf`, { headers: { Authorization: `Bearer ${getToken()}` } });
+    const response = await fetch(apiUrl(`/api/certificates/${certificate.id}/pdf`), { headers: { Authorization: `Bearer ${getToken()}` } });
     downloadBlob(await response.blob(), `${certificate.certificateId}.pdf`);
   };
 
@@ -241,7 +241,7 @@ export function useCertificates() {
       downloadBlob(new Blob(["Demo certificate archive"], { type: "application/zip" }), "campus-certificates.zip");
       return;
     }
-    const response = await fetch("/api/certificates/download/all.zip", { headers: { Authorization: `Bearer ${getToken()}` } });
+    const response = await fetch(apiUrl("/api/certificates/download/all.zip"), { headers: { Authorization: `Bearer ${getToken()}` } });
     downloadBlob(await response.blob(), "campus-certificates.zip");
   };
 

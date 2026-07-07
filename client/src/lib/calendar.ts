@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { toast } from "sonner";
-import { apiFetch, getToken } from "./auth";
+import { apiFetch, apiUrl, getToken } from "./auth";
 import { getSocket } from "./live";
 
 export type CalendarView = "day" | "week" | "month" | "agenda";
@@ -283,7 +283,7 @@ export function useEventCalendar() {
       downloadBlob(new Blob(["BEGIN:VCALENDAR\r\nVERSION:2.0\r\nEND:VCALENDAR"], { type: "text/calendar" }), "campus-hackathon-schedule.ics");
       return;
     }
-    const response = await fetch("/api/events/schedule.ics", { headers: { Authorization: `Bearer ${getToken()}` } });
+    const response = await fetch(apiUrl("/api/events/schedule.ics"), { headers: { Authorization: `Bearer ${getToken()}` } });
     downloadBlob(await response.blob(), "campus-hackathon-schedule.ics");
   };
 

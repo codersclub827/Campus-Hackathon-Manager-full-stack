@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
-import { saveAuth, type AuthUser, type UserRole } from "../lib/auth";
+import { apiUrl, saveAuth, type AuthUser, type UserRole } from "../lib/auth";
 
 export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const location = useLocation();
@@ -68,7 +68,7 @@ export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
 
                 setLoading(true);
                 try {
-                  const response = await fetch(endpoint, {
+                  const response = await fetch(apiUrl(endpoint), {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload)

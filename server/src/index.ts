@@ -18,14 +18,10 @@ const app = express();
 const server = http.createServer(app);
 const corsOptions: CorsOptions = {
   origin(origin, callback) {
-    if (!origin || env.clientUrls.includes(origin.replace(/\/$/, ""))) {
-      callback(null, true);
-      return;
-    }
-
-    callback(new Error(`CORS blocked for origin: ${origin}`));
+    callback(null, origin || true);
   },
-  credentials: true
+  credentials: true,
+  optionsSuccessStatus: 204
 };
 
 const io = new Server(server, {

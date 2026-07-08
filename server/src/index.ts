@@ -4,7 +4,7 @@ import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
 import { Server } from "socket.io";
-import { connectDatabase } from "./config/db.js";
+import connectDatabase from "./config/db.js";
 import { env } from "./config/env.js";
 import { JwtUser, verifyToken } from "./middleware/auth.js";
 import apiRoutes from "./routes/api.js";

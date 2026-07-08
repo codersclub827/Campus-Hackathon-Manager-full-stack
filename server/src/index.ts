@@ -1,4 +1,4 @@
-import cors from "cors";
+import cors, { type CorsOptions } from "cors";
 import express from "express";
 import helmet from "helmet";
 import http from "http";
@@ -16,20 +16,33 @@ import { createNotification, emitNotification } from "./services/notifications.j
 
 const app = express();
 const server = http.createServer(app);
+const corsOptions: CorsOptions = {
+  origin(origin, callback) {
+    if (!origin || env.clientUrls.includes(origin.replace(/\/$/, ""))) {
+      callback(null, true);
+      return;
+    }
+
+    callback(new Error(`CORS blocked for origin: ${origin}`));
+  },
+  credentials: true
+};
+
 const io = new Server(server, {
-  cors: {
-    origin: env.clientUrl,
-    credentials: true
-  }
+  cors: corsOptions
 });
 
 app.set("io", io);
 
 app.use(helmet());
-app.use(cors({ origin: env.clientUrl, credentials: true }));
+app.use(cors(corsOptions));
+app.options("*", cors(corsOptions));
 app.use(express.json({ limit: "2mb" }));
 app.use(morgan("dev"));
 
+app.get("/", (_req, res) => {
+  res.json({ ok: true, service: "Campus Hackathon Manager API", clientOrigins: env.clientUrls });
+});
 app.use("/api/auth", authRoutes);
 app.use("/api", apiRoutes);
 

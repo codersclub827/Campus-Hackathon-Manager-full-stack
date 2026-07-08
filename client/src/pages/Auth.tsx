@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "../components/ui/button";
 import { Card } from "../components/ui/card";
 import { Input } from "../components/ui/input";
-import { apiUrl, saveAuth, type AuthUser, type UserRole } from "../lib/auth";
+import { apiUrl, saveAuth, type AuthUser, type UserRole } from "../lib/auth.tsx";
 
 export function AuthPage({ mode }: { mode: "login" | "signup" | "forgot" }) {
   const location = useLocation();
